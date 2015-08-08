@@ -1,0 +1,121 @@
+/*
+ Media Queries
+*/
+@mixin md-xsmall {
+  @media (max-width: "767px") {
+    @content;
+  }
+}
+
+@mixin md-small {
+  @media (min-width: "768px") and (max-width: "991px") {
+    @content;
+  }
+}
+
+@mixin md-medium {
+  @media (min-width: "992px") and (max-width: "1199px") {
+    @content;
+  }
+}
+
+@mixin md-large {
+  @media (min-width: "1200px") {
+    @content;
+  }
+}
+
+/*
+  Background image
+*/
+$image-dir: "../images/";
+
+@mixin background-image($filename, $position: 0 0, $repeat: no-repeat) {
+  background: {
+    image: url(#{$image-dir}#{$filename});
+    position: $position;
+    repeat: $repeat;
+  }
+}
+
+/*
+  Font face
+*/
+$font-dir: "../fonts/";
+
+@mixin font-face($family, $fontname, $style: normal, $weight: normal) {
+
+  @font-face {
+    font-family: $family;
+    src: url('#{$font-dir}#{$fontname}.eot'); // IE9 compat
+    src: url('#{$font-dir}#{$fontname}.eot?#iefix') format('embedded-opentype'), // IE8 and below
+    url('#{$font-dir}#{$fontname}.woff') format('woff'), // standards
+    url('#{$font-dir}#{$fontname}.ttf') format('truetype'), // Safari, Android, iOS
+    url('#{$font-dir}#{$fontname}.svg##{$family}') format('svg'); // legacy iOS
+
+    font-style: $style;
+    font-weight: $weight;
+  }
+}
+
+/*
+  Font size in REM with PX callbacl
+*/
+@function calculateRem($size) {
+  $remSize: $size / 16px;
+  @return  $remSize * 1rem;
+}
+
+@mixin font-size($size) {
+  font-size: $size;
+  font-size: calculateRem($size);
+}
+
+/*
+  Transition
+*/
+@mixin transition($args...) {
+  -webkit-transition: $args;
+  -moz-transition: $args;
+  -ms-transition: $args;
+  -o-transition: $args;
+  transition: $args;
+}
+
+/*
+  Cross browser opacity
+*/
+@mixin opacity($opacity) {
+  opacity: $opacity;
+  $opacity-ie: $opacity * 100;
+  filter: alpha(opacity=$opacity-ie); 
+}
+
+/*
+  Placeholder color
+*/
+@mixin placeholder-color($color) {
+  ::-webkit-input-placeholder { 
+    color:    $color;
+  }
+  :-moz-placeholder {
+    color:    $color;
+    opacity:  1;
+  }
+  ::-moz-placeholder {
+    color:    $color;
+    opacity:  1;
+  }
+  :-ms-input-placeholder { 
+    color:    $color;
+  }
+}
+
+/*
+  Vertical align without height 
+*/
+@mixin vertical-align {
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
+}
